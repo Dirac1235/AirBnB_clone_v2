@@ -45,7 +45,7 @@ class BaseModel:
             self.created_at = self.updated_at = datetime.now()
 
     def __str__(self):
-        """returns a string
+        """returns a string format
         Return:
             returns a string of class name, id, and dictionary
         """
@@ -53,7 +53,7 @@ class BaseModel:
             type(self).__name__, self.id, self.__dict__)
 
     def __repr__(self):
-        """return a string representaion
+        """return the string representaion
         """
         return self.__str__()
 
@@ -65,7 +65,7 @@ class BaseModel:
         models.storage.save()
 
     def to_dict(self):
-        """creates dictionary of the class  and returns
+        """creates dictionary of the class
         Return:
             returns a dictionary of all the key values in __dict__
         """
@@ -78,6 +78,6 @@ class BaseModel:
         return my_dict
 
     def delete(self):
-        """ delete object
+        """ deletes object
         """
         models.storage.delete(self)

@@ -9,7 +9,7 @@ from models.place import Place
 
 
 class City(BaseModel, Base):
-    """This is the class for City
+    """This is the class for City table
     Attributes:
         state_id: The state id
         name: input name

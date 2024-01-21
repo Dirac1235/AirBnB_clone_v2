@@ -21,7 +21,7 @@ class test_basemodel(unittest.TestCase):
     A class to test pep8 on base_model file"""
     def test_pycodestyle(self):
         """
-        Test pep8 format
+        Test if it conforms to pep8 format
         """
         pycostyle = pycodestyle.StyleGuide(quiet=True)
         result = pycostyle.check_files(['models/base_model.py'])
@@ -44,14 +44,14 @@ class test_basemodel(unittest.TestCase):
         self.assertEqual(type(i), self.value)
 
     def test_kwargs(self):
-        """ """
+        """ test key word argumetnts"""
         i = self.value()
         copy = i.to_dict()
         new = BaseModel(**copy)
         self.assertFalse(new is i)
 
     def test_kwargs_int(self):
-        """ """
+        """ test key word arguments"""
         i = self.value()
         copy = i.to_dict()
         copy.update({1: 2})
@@ -68,7 +68,7 @@ class test_basemodel(unittest.TestCase):
             self.assertEqual(j[key], i.to_dict())
 
     def test_str(self):
-        """ """
+        """ test if string"""
         i = self.value()
         self.assertEqual(str(i), '[{}] ({}) {}'.format(self.name, i.id,
                          i.__dict__))
@@ -96,11 +96,6 @@ class test_basemodel(unittest.TestCase):
         new = self.value()
         self.assertEqual(type(new.id), str)
 
-    def test_created_at(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.created_at), datetime.datetime)
-
     def test_updated_at(self):
         """ """
         new = self.value()
@@ -109,9 +104,14 @@ class test_basemodel(unittest.TestCase):
         new = BaseModel(**n)
         self.assertFalse(new.created_at == new.updated_at)
 
+    def test_created_at(self):
+        """ """
+        new = self.value()
+        self.assertEqual(type(new.created_at), datetime.datetime)
+
     def test_uuid(self):
         """
-        Testin UUID
+        Testing UUID
         """
         instance1 = BaseModel()
         instance2 = BaseModel()
@@ -127,7 +127,7 @@ class test_basemodel(unittest.TestCase):
         self.assertNotEqual(instance2.id, instance3.id)
 
     def test_str_method(self):
-        """Testing returns STR method"""
+        """Test if it returns STR method"""
         instance6 = BaseModel()
         string_output = "[BaseModel] ({}) {}".format(instance6.id,
                                                      instance6.__dict__)
@@ -172,7 +172,7 @@ class TestBaseModel(unittest.TestCase):
 
     @classmethod
     def teardown(cls):
-        """at the end of the test this will tear it down"""
+        """test for tear down"""
         del cls.base
 
     def tearDown(self):
@@ -183,13 +183,13 @@ class TestBaseModel(unittest.TestCase):
             pass
 
     def test_pep8_BaseModel(self):
-        """Testing for pep8"""
+        """test  for pep8"""
         style = pep8.StyleGuide(quiet=True)
         p = style.check_files(['models/base_model.py'])
         self.assertEqual(p.total_errors, 0, "fix pep8")
 
     def test_checking_for_docstring_BaseModel(self):
-        """checking for docstrings"""
+        """Checking if the document contains docstrings"""
         self.assertIsNotNone(BaseModel.__doc__)
         self.assertIsNotNone(BaseModel.__init__.__doc__)
         self.assertIsNotNone(BaseModel.__str__.__doc__)
@@ -206,10 +206,6 @@ class TestBaseModel(unittest.TestCase):
         """test if the base is an type BaseModel"""
         self.assertTrue(isinstance(self.base, BaseModel))
 
-    def test_save_BaesModel(self):
-        """test if the save works"""
-        self.base.save()
-        self.assertNotEqual(self.base.created_at, self.base.updated_at)
 
     def test_to_dict_BaseModel(self):
         """test if dictionary works"""
@@ -218,6 +214,10 @@ class TestBaseModel(unittest.TestCase):
         self.assertIsInstance(base_dict['created_at'], str)
         self.assertIsInstance(base_dict['updated_at'], str)
 
+    def test_save_BaesModel(self):
+        """test if the save works"""
+        self.base.save()
+        self.assertNotEqual(self.base.created_at, self.base.updated_at)
 
 if __name__ == "__main__":
     unittest.main()

@@ -14,7 +14,7 @@ from models.amenity import Amenity
 
 
 class DBStorage:
-    """ create tables in environmental"""
+    """ creates tables in environmental"""
     __engine = None
     __session = None
 
@@ -32,30 +32,30 @@ class DBStorage:
         if env == "test":
             Base.metadata.drop_all(self.__engine)
 
-    def all(self, cls=None):
-        """returns a dictionary
+    def all(self, clas=None):
+        """result
         Return:
             returns a dictionary of __object
         """
         dic = {}
-        if cls:
-            if type(cls) is str:
-                cls = eval(cls)
-            query = self.__session.query(cls)
+        if clas:
+            if type(clas) is str:
+                clas = eval(clas)
+            query = self.__session.query(clas)
             for elem in query:
                 key = "{}.{}".format(type(elem).__name__, elem.id)
                 dic[key] = elem
         else:
             lista = [State, City, User, Place, Review, Amenity]
-            for clase in lista:
-                query = self.__session.query(clase)
+            for clases in lista:
+                query = self.__session.query(clases)
                 for elem in query:
                     key = "{}.{}".format(type(elem).__name__, elem.id)
                     dic[key] = elem
         return (dic)
 
     def new(self, obj):
-        """add a new element in the table
+        """adds a new element in the table
         """
         self.__session.add(obj)
 
@@ -65,13 +65,13 @@ class DBStorage:
         self.__session.commit()
 
     def delete(self, obj=None):
-        """delete an element in the table
+        """deletes an element in the table
         """
         if obj:
             self.session.delete(obj)
 
     def reload(self):
-        """configuration
+        """reloads engine
         """
         Base.metadata.create_all(self.__engine)
         sec = sessionmaker(bind=self.__engine, expire_on_commit=False)
@@ -79,6 +79,6 @@ class DBStorage:
         self.__session = Session()
 
     def close(self):
-        """ calls remove()
+        """ calls the remove() 
         """
         self.__session.close()

@@ -14,6 +14,6 @@ class test_state(test_basemodel):
         self.value = State
 
     def test_name3(self):
-        """ """
+        """ Test type """
         new = self.value()
         self.assertEqual(type(new.name), str)
